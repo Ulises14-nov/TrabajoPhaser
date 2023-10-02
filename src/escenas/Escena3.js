@@ -1,5 +1,4 @@
 import EscenaBase from "./EscenaBase.js";
-import Jugador from "./Jugador.js";
 
 let scoreToCatch = 20;
 
@@ -8,35 +7,20 @@ class Escena3 extends EscenaBase {
         super("Escena3");
     };
 
-    preload() {
-        this.load.setBaseURL('https://labs.phaser.io');
-        this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-        this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-        this.load.image('star', 'src/games/firstgame/assets/star.png');
-        this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
-        this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    };
-
     create() {
-        this.score = 16;
+        this.score = scoreToCatch;
 
-        this.add.image(400, 300, 'sky');
+        super.create();
 
-        this.platforms = this.physics.add.staticGroup();
-
-        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody().setTint(0xF00000);
+        this.platforms.create(500, 568, 'ground').setScale(2.5).refreshBody().setTint(0xF00000);
 
         this.platforms.create(600, 400, 'ground').setTint(0xF00000);
         this.platforms.create(150, 250, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
         this.platforms.create(750, 220, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
 
-        this.player = new Jugador(this, 100, 450);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
-
         this.stars = this.physics.add.group({
             key: 'star',
-            repeat: scoreToCatch,
+            repeat: scoreToCatch - 1,
             setXY: { x: 15, y: 4, stepX: 50 }
         });
 

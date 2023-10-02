@@ -1,4 +1,5 @@
 const niveles = ['Escena1', 'Escena2', 'Escena3'];
+import Jugador from "./Jugador.js";
 
 class BaseScene extends Phaser.Scene {
     constructor(key) {
@@ -14,13 +15,33 @@ class BaseScene extends Phaser.Scene {
     };
 
     preload() {
-        this.load.setBaseURL('https://labs.phaser.io');
-        this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-        this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-        this.load.image('star', 'src/games/firstgame/assets/star.png');
-        this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
-        this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        try {
+            this.load.setBaseURL('https://labs.phaser.io');
+            this.load.image('sky', 'src/games/firstgame/assets/sky.png');
+            this.load.image('ground', 'src/games/firstgame/assets/platform.png');
+            this.load.image('star', 'src/games/firstgame/assets/star.png');
+            this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
+            this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        } catch (error) {
+            // Manejo de errores
+            console.error('Error durante la carga de imágenes:', error);
+
+            // // Carga de imágenes en local en caso de error
+            // this.load.image('sky', '../public/img/sky.png');
+            // this.load.image('ground', '../public/img/platform.png');
+            // this.load.image('star', '../public/img/star.png');
+            // this.load.image('bomb', '../public/img/bomb.png');
+            // this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
+        }
     };
+
+    create() {
+        this.add.image(500, 300, 'sky').setScale(2);
+
+        this.platforms = this.physics.add.staticGroup();
+
+        this.player = new Jugador(this, 100, 450);
+    }
 
     update() {
         if (this.gameOver) {
