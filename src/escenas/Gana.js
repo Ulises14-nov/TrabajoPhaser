@@ -5,13 +5,16 @@ class Gana extends Phaser.Scene {
     };
 
     preload() {
-        this.load.setBaseURL('https://labs.phaser.io');
-        this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-        this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-        this.load.image('star', 'src/games/firstgame/assets/star.png');
+        this.load.audio('startSound', 'sounds/startSound.mp3');
+
+        this.load.image('sky', 'img/sky.png');
+        this.load.image('ground', 'img/platform.png');
+        this.load.image('bomb', 'img/star.png');
     };
 
     create() {
+        this.startSound = this.sound.add('startSound');
+
         this.add.image(500, 300, 'sky').setScale(2);
 
         this.text = this.add.text(500, 300, '¡Ganaste!', {
@@ -38,7 +41,8 @@ class Gana extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-R', () => {
             this.physics.resume();
-            this.scene.start('Scene1');
+            this.startSound.play();
+            this.scene.start('Escena1');
         });
     };
 };

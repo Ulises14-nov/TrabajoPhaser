@@ -5,13 +5,16 @@ class Pierde extends Phaser.Scene {
     };
 
     preload() {
-        this.load.setBaseURL('https://labs.phaser.io');
-        this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-        this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-        this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
+        this.load.audio('startSound', 'sounds/startSound.mp3');
+
+        this.load.image('sky', 'img/sky.png');
+        this.load.image('ground', 'img/platform.png');
+        this.load.image('bomb', 'img/bomb.png');
     };
 
     create() {
+        this.startSound = this.sound.add('startSound');
+
         this.add.image(500, 300, 'sky').setScale(2);
 
         this.text = this.add.text(500, 300, 'Perdiste :(', {
@@ -38,7 +41,8 @@ class Pierde extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-R', () => {
             this.physics.resume();
-            this.scene.start('Escena1');
+            this.startSound.play();
+            this.scene.start('Escena3');
         });
     };
 };

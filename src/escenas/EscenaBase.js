@@ -15,19 +15,13 @@ class BaseScene extends Phaser.Scene {
     };
 
     preload() {
-        try {
-            this.load.setBaseURL('https://labs.phaser.io');
+        //Audios
+        this.load.audio('jumpSound', 'sounds/jumpSound.mp3');
+        this.load.audio('starSound', 'sounds/starSound.mp3');
+        this.load.audio('loseSound', 'sounds/loseSound.mp3');
+        this.load.audio('winSound', 'sounds/winSound.mp3');
 
-            this.load.image('sky', 'src/games/firstgame/assets/sky.png');
-            this.load.image('ground', 'src/games/firstgame/assets/platform.png');
-            this.load.image('star', 'src/games/firstgame/assets/star.png');
-            this.load.image('bomb', 'src/games/firstgame/assets/bomb.png');
-            this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-        } catch (error) {
-            // Manejo de errores
-            console.error('Error durante la carga de imágenes:', error);
-        };
-
+        //Imagenes
         this.load.image('sky', 'img/sky.png');
         this.load.image('ground', 'img/platform.png');
         this.load.image('star', 'img/star.png');
@@ -36,11 +30,16 @@ class BaseScene extends Phaser.Scene {
     };
 
     create() {
+        //Sonidos
+        this.jumpSound = this.sound.add('jumpSound');
+        this.starSound = this.sound.add('starSound');
+        this.loseSound = this.sound.add('loseSound');
+        this.winSound = this.sound.add('winSound');
+
         this.add.image(500, 300, 'sky').setScale(2);
 
         this.platforms = this.physics.add.staticGroup();
-
-        this.player = new Jugador(this, 100, 450);
+        this.player = new Jugador(this, 100, 450, this.jumpSound);
 
         this.scoreText = this.add.text(16, 16, `Estrellas: ${this.score}`, {
             fontFamily: 'VT323, monospace',
@@ -69,11 +68,13 @@ class BaseScene extends Phaser.Scene {
         };
 
         this.score -= 1;
+        this.starSound.play();
         this.scoreText.setText(`Estrellas: ${this.score}`, {});
 
         if (this.starsCollected === this.score) {
             const currentSceneIndex = niveles.indexOf(this.scene.key);
             if (currentSceneIndex === niveles.length - 1) {
+                this.winSound.play();
                 this.scene.start('Gana');
             } else {
                 const nextScene = niveles[currentSceneIndex + 1];
@@ -83,6 +84,7 @@ class BaseScene extends Phaser.Scene {
     };
 
     hitBomb() {
+        this.loseSound.play();
         this.player.setTint(0xFF0000);
         this.physics.pause();
         this.player.anims.play('turn_idle');

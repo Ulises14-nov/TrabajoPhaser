@@ -53,6 +53,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite {
 
             if ((this.cursors.up.isDown || this.cursors.up2.isDown) && this.body.touching.down) {
                 this.setVelocityY(-330);
+                this.scene.jumpSound.play();
             };
         };
     };
