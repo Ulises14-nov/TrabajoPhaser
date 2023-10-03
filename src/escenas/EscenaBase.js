@@ -4,6 +4,7 @@ import Jugador from "./Jugador.js";
 class BaseScene extends Phaser.Scene {
     constructor(key) {
         super(key);
+        this.physics;
         this.scoreText;
         this.gameOver = false;
         this.score;
@@ -11,12 +12,12 @@ class BaseScene extends Phaser.Scene {
         this.bombs;
         this.stars;
         this.starsCollected = 0;
-        this.totalStarsInLevel = 0;
     };
 
     preload() {
         try {
             this.load.setBaseURL('https://labs.phaser.io');
+
             this.load.image('sky', 'src/games/firstgame/assets/sky.png');
             this.load.image('ground', 'src/games/firstgame/assets/platform.png');
             this.load.image('star', 'src/games/firstgame/assets/star.png');
@@ -25,14 +26,13 @@ class BaseScene extends Phaser.Scene {
         } catch (error) {
             // Manejo de errores
             console.error('Error durante la carga de imágenes:', error);
+        };
 
-            // // Carga de imágenes en local en caso de error
-            // this.load.image('sky', '../public/img/sky.png');
-            // this.load.image('ground', '../public/img/platform.png');
-            // this.load.image('star', '../public/img/star.png');
-            // this.load.image('bomb', '../public/img/bomb.png');
-            // this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
-        }
+        this.load.image('sky', 'img/sky.png');
+        this.load.image('ground', 'img/platform.png');
+        this.load.image('star', 'img/star.png');
+        this.load.image('bomb', 'img/bomb.png');
+        this.load.spritesheet('dude', 'img/dude.png', { frameWidth: 32, frameHeight: 48 });
     };
 
     create() {
@@ -41,7 +41,13 @@ class BaseScene extends Phaser.Scene {
         this.platforms = this.physics.add.staticGroup();
 
         this.player = new Jugador(this, 100, 450);
-    }
+
+        this.scoreText = this.add.text(16, 16, `Estrellas: ${this.score}`, {
+            fontFamily: 'VT323, monospace',
+            fontSize: '48px',
+            fill: '#F4C430'
+        });
+    };
 
     update() {
         if (this.gameOver) {
@@ -63,7 +69,7 @@ class BaseScene extends Phaser.Scene {
         };
 
         this.score -= 1;
-        this.scoreText.setText(`Estrellas: ${this.score}`);
+        this.scoreText.setText(`Estrellas: ${this.score}`, {});
 
         if (this.starsCollected === this.score) {
             const currentSceneIndex = niveles.indexOf(this.scene.key);
@@ -72,16 +78,22 @@ class BaseScene extends Phaser.Scene {
             } else {
                 const nextScene = niveles[currentSceneIndex + 1];
                 this.scene.start(nextScene);
-            }
-        }
+            };
+        };
     };
 
     hitBomb() {
-        if (this.player) {
-            this.player.destroy();
-            this.currentLevel = 0;
-            this.scene.start('Pierde');
-        };
+        this.player.setTint(0xFF0000);
+        this.physics.pause();
+        this.player.anims.play('turn_idle');
+
+        setTimeout(() => {
+            if (this.player) {
+                this.player.destroy();
+                this.currentLevel = 0;
+                this.scene.start('Pierde');
+            }
+        }, 500);
     };
 };
 

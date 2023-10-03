@@ -16,12 +16,13 @@ class Escena3 extends EscenaBase {
 
         this.platforms.create(600, 400, 'ground').setTint(0xF00000);
         this.platforms.create(150, 250, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
-        this.platforms.create(750, 220, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
+        this.platforms.create(1000, 320, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
+        this.platforms.create(730, 220, 'ground').setScale(0.5, 2).refreshBody().setTint(0xF00000);
 
         this.stars = this.physics.add.group({
             key: 'star',
             repeat: scoreToCatch - 1,
-            setXY: { x: 15, y: 4, stepX: 50 }
+            setXY: { x: 30, y: 4, stepX: 50 }
         });
 
         this.stars.children.iterate(child => {
@@ -29,8 +30,6 @@ class Escena3 extends EscenaBase {
         });
 
         this.bombs = this.physics.add.group();
-
-        this.scoreText = this.add.text(16, 16, 'Estrellas: ' + scoreToCatch, { fontSize: '32px', fill: '#000' });
 
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);

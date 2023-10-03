@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'VT323-Regular';
+    src: url(/public/VT323-Regular.woff) format('ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'VT323-Regular';
+}
+
+body {
+    background-color: #0b0b0b;
+    display: flex;
+}
+
+canvas {
+    margin-block: 1rem;
+    margin-inline: auto;
+}

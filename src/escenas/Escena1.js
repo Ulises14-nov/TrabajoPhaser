@@ -21,7 +21,7 @@ class Escena1 extends EscenaBase {
         this.stars = this.physics.add.group({
             key: 'star',
             repeat: scoreToCatch - 1,
-            setXY: { x: 15, y: 0, stepX: 70 }
+            setXY: { x: 60, y: 0, stepX: 80 }
         });
 
         this.stars.children.iterate(child => {
@@ -29,8 +29,6 @@ class Escena1 extends EscenaBase {
         });
 
         this.bombs = this.physics.add.group();
-
-        this.scoreText = this.add.text(16, 16, 'Estrellas: ' + scoreToCatch, { fontSize: '32px', fill: '#000' });
 
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);

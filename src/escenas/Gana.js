@@ -13,10 +13,17 @@ class Gana extends Phaser.Scene {
 
     create() {
         this.add.image(500, 300, 'sky').setScale(2);
-        this.text = this.add.text(500, 300, '¡Ganaste!', { fontSize: '64px', fill: '#000' });
+
+        this.text = this.add.text(500, 300, '¡Ganaste!', {
+            fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#000'
+        });
         this.text.setOrigin(0.5, 1.5);
-        this.text = this.add.text(500, 300, 'PRESIONA R PARA REINICIAR', { fontSize: '40px', fill: '#000' });
+
+        this.text = this.add.text(500, 300, 'PRESIONA R PARA REINICIAR', {
+            fontFamily: 'VT323, monospace', fontSize: '40px', fill: '#F4C430'
+        });
         this.text.setOrigin(0.5, 0);
+
         this.add.image(500, 360, 'ground').setOrigin(0.5, 0).setTint(0xF00000);
 
         this.add.image(100, 370, 'star').setScale(2, 2).setOrigin(0.5, 0);
