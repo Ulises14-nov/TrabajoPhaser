@@ -18,6 +18,7 @@ class BaseScene extends Phaser.Scene {
         //Audios
         this.load.audio('jumpSound', 'sounds/jumpSound.mp3');
         this.load.audio('starSound', 'sounds/starSound.mp3');
+        this.load.audio('nextLevelSound', 'sounds/nextLevelSound.mp3');
         this.load.audio('loseSound', 'sounds/loseSound.mp3');
         this.load.audio('winSound', 'sounds/winSound.mp3');
 
@@ -33,6 +34,7 @@ class BaseScene extends Phaser.Scene {
         //Sonidos
         this.jumpSound = this.sound.add('jumpSound');
         this.starSound = this.sound.add('starSound');
+        this.nextLevelSound = this.sound.add('nextLevelSound');
         this.loseSound = this.sound.add('loseSound');
         this.winSound = this.sound.add('winSound');
 
@@ -78,6 +80,7 @@ class BaseScene extends Phaser.Scene {
                 this.scene.start('Gana');
             } else {
                 const nextScene = niveles[currentSceneIndex + 1];
+                this.nextLevelSound.play();
                 this.scene.start(nextScene);
             };
         };
