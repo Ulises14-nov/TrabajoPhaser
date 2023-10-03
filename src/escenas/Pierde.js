@@ -42,7 +42,7 @@ class Pierde extends Phaser.Scene {
         this.input.keyboard.on('keydown-R', () => {
             this.physics.resume();
             this.startSound.play();
-            this.scene.start('Escena3');
+            this.scene.start('Escena1');
         });
     };
 };
