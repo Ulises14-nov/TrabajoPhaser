@@ -1,41 +1,48 @@
 import EscenaBase from "./EscenaBase.js";
 
-let scoreToCatch = 16;
-
 class Escena2 extends EscenaBase {
     constructor() {
         super("Escena2");
+        this.scoreToCatch = 16;
+    };
+
+    init(data) {
+        this.starsCollected = data.starsCollected;
     };
 
     create() {
-        this.score = scoreToCatch;
+        this.score = this.scoreToCatch;
 
         super.create();
 
-        this.platforms.create(500, 568, 'ground').setScale(2.5).refreshBody().setTint(0xFF00FF);
+        this.platforms.create(100, 400, 'platform').setScale(0.5, 1).refreshBody().setTint(0xFF00FF);
+        this.platforms.create(-550, 250, 'platform').setTint(0xFF00FF);
+        this.platforms.create(900, 410, 'platform2').setScale(0.5, 1).refreshBody().setTint(0xFF00FF);
+        this.platforms.create(900, 220, 'platform').setScale(0.5, 1).refreshBody().setTint(0xFF00FF);
 
-        this.platforms.create(300, 400, 'ground').setTint(0xFF00FF);
-        this.platforms.create(50, 250, 'ground').setScale(0.5, 2).refreshBody().setTint(0xFF00FF);
-        this.platforms.create(750, 220, 'ground').setTint(0xFF00FF);
+        this.platforms.create(500, 568, 'platform').setTint(0xFF00FF);
 
-        this.stars = this.physics.add.group({
-            key: 'star',
-            repeat: scoreToCatch - 1,
-            setXY: { x: 40, y: 0, stepX: 60 }
-        });
-
-        this.stars.children.iterate(child => {
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-        });
+        this.createSandwich(this.scoreToCatch, 50, 60);
 
         this.bombs = this.physics.add.group();
 
         this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.stars, this.platforms);
+        this.physics.add.collider(this.sandwich, this.platforms);
         this.physics.add.collider(this.bombs, this.platforms);
 
-        this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
+        this.physics.add.overlap(this.player, this.sandwich, this.collectStar, null, this);
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
+    };
+
+    update() {
+        super.update();
+
+        if (this.score == 0) {
+            this.player.anims.play('new_scene', true);
+            setTimeout(() => {
+                this.scene.start('Escena3', { starsCollected: this.starsCollected });
+            }, 1000);
+        };
     };
 };
 

@@ -27,7 +27,10 @@ class Pierde extends Phaser.Scene {
         });
         this.text.setOrigin(0.5, 0);
 
-        this.add.image(500, 360, 'ground').setOrigin(0.5, 0).setTint(0xff00ff, 14, 9, 10, 8);
+        this.text = this.add.text(500, 350, 'PRESIONA ENTER PARA VOLVER AL MENU', {
+            fontFamily: 'VT323, monospace', fontSize: '40px', fill: '#F4C430'
+        });
+        this.text.setOrigin(0.5, 0);
 
         this.add.image(100, 370, 'bomb').setScale(2, 2).setOrigin(0.5, 0);
         this.add.image(70, 250, 'bomb').setScale(2, 2).setOrigin(0.5, 0);
@@ -43,6 +46,11 @@ class Pierde extends Phaser.Scene {
             this.physics.resume();
             this.startSound.play();
             this.scene.start('Escena1');
+        });
+
+        this.input.keyboard.on('keydown-ENTER', () => {
+            this.startSound.play();
+            this.scene.start('Menu');
         });
     };
 };

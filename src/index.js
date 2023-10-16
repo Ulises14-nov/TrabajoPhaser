@@ -3,9 +3,10 @@ import Escena2 from "./escenas/Escena2.js";
 import Escena3 from "./escenas/Escena3.js";
 import Pierde from "./escenas/Pierde.js";
 import Gana from "./escenas/Gana.js";
+import Menu from "./escenas/Menu.js";
 
 const createScene = (Scene) => new Scene();
-const Escenas = [Escena1, Escena2, Escena3, Pierde, Gana];
+const Escenas = [Menu, Escena1, Escena2, Escena3, Pierde, Gana];
 const iniciarEscena = () => Escenas.map(createScene);
 
 let config = {
