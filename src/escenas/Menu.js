@@ -7,16 +7,14 @@ class Menu extends Phaser.Scene {
     preload() {
         this.load.audio('startSound', 'sounds/startSound.mp3');
 
-        this.load.image('sky', 'img/sky.png');
-        this.load.image('ground', 'img/platform.png');
-        this.load.image('bomb', 'img/bomb.png');
+        this.load.image('Gana', 'img/sky.png');
     };
 
     create() {
         this.startSound = this.sound.add('startSound');
         this.startSound.volume = 0.5;
 
-        this.add.image(500, 300, 'winBG').setScale(2);
+        this.add.image(500, 300, 'Gana');
 
         this.text = this.add.text(500, 300, 'PUNK DUDE', {
             fontFamily: 'VT323, monospace', fontSize: '84px', fill: '#F9F9F9'
@@ -30,7 +28,7 @@ class Menu extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-ENTER', () => {
             this.startSound.play();
-            this.scene.start('Escena1');
+            this.scene.start('Gana');
         });
     };
 };
