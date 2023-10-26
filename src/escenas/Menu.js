@@ -28,7 +28,7 @@ class Menu extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-ENTER', () => {
             this.startSound.play();
-            this.scene.start('Gana');
+            this.scene.start('Escena1');
         });
     };
 };
